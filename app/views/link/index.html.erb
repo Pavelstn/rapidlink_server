@@ -1,0 +1,44 @@
+<script src="/assets/webtoolkit.base64.js"></script>
+
+<script> 
+  $(document).ready(function(){
+    
+    // $('#llink').attr('href',url);
+    //$('#llink').text("Ссылка готова можно переходить") ;
+    refresh();
+
+  });
+
+  var sec=20;
+  // выставляем минуты
+  var min=00;
+
+  function refresh()
+  {
+    sec--;
+    if(sec==-01){sec=59; min=min-1;}
+    else{min=min;}
+    if(sec<=9){sec="0" + sec;}
+    time=(min<=9 ? "0" + min : min) + ":" + sec;
+    if(document.getElementById){timer.innerHTML="Ссылка загрузится через "+time ;}
+    inter=setTimeout("refresh()", 1000);
+    if(min=='00' && sec=='00')
+    {
+      sec="00"; clearInterval(inter); 
+
+      var url= Base64.decode("<%=@base64_url%>");
+      timer.innerHTML="<a href=\""+url+"\">Ссылка загружена, можно переходить</a>";
+      ldr.innerHTML="";
+     
+    }
+  }
+
+</script>
+<!---
+user <%=@user_id%><br>
+url <%=@base64_url%><br>
+---->
+<br><p id="timer"></p>
+<p id="ldr"><img src="/assets/loader.gif"></p>
+
+
